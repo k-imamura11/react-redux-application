@@ -7,13 +7,19 @@ import { Link } from 'react-router-dom'
 class EventsIndex extends Component {
 	componentDidMount() {
 		this.props.readEvents()
+
+		console.log(this.props)
 	}
 
 	renderEvents() {
 		return _.map(this.props.events, event => (
 			<tr key={event.id}>
 				<td>{event.id}</td>
-				<td>{event.title}</td>
+				<td>
+					<Link to={`/events/${event.id}`}>
+						{event.title}
+					</Link>
+				</td>
 				<td>{event.body}</td>
 			</tr>
 		))
@@ -44,9 +50,9 @@ class EventsIndex extends Component {
 }
 
 const mapStateToProps = state => ({ events: state.events })
-// const mapDispatchToProps = ({ readEvents })
-const mapDispatchToProps = dispatch => ({
-	readEvents: () => dispatch(readEvents())
-})
+const mapDispatchToProps = ({ readEvents })
+// const mapDispatchToProps = dispatch => ({
+// 	readEvents: () => dispatch(readEvents())
+// })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
